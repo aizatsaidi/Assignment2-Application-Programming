@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/homestay_list_screen.dart';
+import 'screens/state_list_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: const HomestayListScreen(),
+      home: const StateListScreen(),
     );
   }
 }
