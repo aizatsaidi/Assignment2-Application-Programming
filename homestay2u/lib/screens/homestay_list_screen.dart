@@ -108,10 +108,24 @@ class _HomestayListScreenState extends State<HomestayListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-       title: Text(widget.state == 'All' ? 'All Homestays' : '${widget.state} Homestays'),
-        backgroundColor: Colors.teal,
-        foregroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF0F4FF),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+            ),
+          ),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            foregroundColor: Colors.white,
+            elevation: 0,
+            title: Text(widget.state == 'All' ? 'All Homestays' : '${widget.state} Homestays'),
+          ),
+        ),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

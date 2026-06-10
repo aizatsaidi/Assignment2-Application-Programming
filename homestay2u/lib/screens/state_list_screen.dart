@@ -32,21 +32,21 @@ class _StateListScreenState extends State<StateListScreen> {
     'Kuala Lumpur': const Color(0xFF546E7A),
   };
 
-  final Map<String, String> stateEmojis = {
-    'Johor': '🏖️',
-    'Kedah': '🌾',
-    'Kelantan': '🎨',
-    'Melaka': '🏛️',
-    'Negeri Sembilan': '🛖',
-    'Pahang': '🏔️',
-    'Perak': '💎',
-    'Perlis': '🌿',
-    'Pulau Pinang': '🍜',
-    'Sabah': '🦧',
-    'Sarawak': '🌴',
-    'Selangor': '🏙️',
-    'Terengganu': '🐢',
-    'Kuala Lumpur': '🌆',
+  final Map<String, String> stateImages = {
+    'Johor': 'assets/images/Johor.jpg',
+    'Kedah': 'assets/images/Kedah.jpeg',
+    'Kelantan': 'assets/images/Kelantan.png',
+    'Melaka': 'assets/images/Melaka.jpg',
+    'Negeri Sembilan': 'assets/images/Negeri_Sembilan.jpg',
+    'Pahang': 'assets/images/Pahang.jpg',
+    'Perak': 'assets/images/Perak.jpg',
+    'Perlis': 'assets/images/Perlis.jpg',
+    'Pulau Pinang': 'assets/images/Pulau_Pinang.webp',
+    'Sabah': 'assets/images/Sabah.jpg',
+    'Sarawak': 'assets/images/Sarawak.jpg',
+    'Selangor': 'assets/images/Selangor.webp',
+    'Terengganu': 'assets/images/Terengganu.webp',
+    'Kuala Lumpur': 'assets/images/Kuala_Lumpur.jpeg',
   };
 
   @override
@@ -90,7 +90,7 @@ class _StateListScreenState extends State<StateListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF0F4FF),
       body: isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.teal))
           : errorMessage.isNotEmpty
@@ -113,10 +113,15 @@ class _StateListScreenState extends State<StateListScreen> {
                   slivers: [
                     // Hero header
                     SliverAppBar(
-                      expandedHeight: 180,
-                      pinned: true,
-                      backgroundColor: Colors.teal,
-                      flexibleSpace: FlexibleSpaceBar(
+                        expandedHeight: 180,
+                        pinned: true,
+                        backgroundColor: const Color(0xFF6A11CB),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(28),
+                          ),
+                        ),
+                        flexibleSpace: FlexibleSpaceBar(
                         title: const Text(
                           'Homestay2U Malaysia',
                           style: TextStyle(
@@ -130,7 +135,10 @@ class _StateListScreenState extends State<StateListScreen> {
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [Color(0xFF00695C), Color(0xFF26A69A)],
+                              colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+                            ),
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(28),
                             ),
                           ),
                           child: const Center(
@@ -138,10 +146,11 @@ class _StateListScreenState extends State<StateListScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(height: 20),
-                                Text(
-                                  '🏡',
-                                  style: TextStyle(fontSize: 48),
-                                ),
+                                Icon(
+                                    Icons.home_work,
+                                    size: 48,
+                                    color: Colors.white,
+                                  ),
                                 SizedBox(height: 8),
                                 Text(
                                   'Discover Malaysian Homestays',
@@ -220,7 +229,7 @@ class _StateListScreenState extends State<StateListScreen> {
                           (context, index) {
                             final s = states[index];
                             final color = stateColors[s['state']] ?? Colors.teal;
-                            final emoji = stateEmojis[s['state']] ?? '🏡';
+                            final image = stateImages[s['state']] ?? '';
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -232,59 +241,58 @@ class _StateListScreenState extends State<StateListScreen> {
                                   ),
                                 );
                               },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      color,
-                                      color.withOpacity(0.75),
-                                    ],
-                                  ),
+                              child: ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: color.withOpacity(0.3),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(14),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  child: Stack(
+                                    fit: StackFit.expand,
                                     children: [
-                                      Text(
-                                        emoji,
-                                        style: const TextStyle(fontSize: 28),
+                                      // Background image
+                                      Image.asset(
+                                        image,
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (_, __, ___) => Container(color: color),
                                       ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            s['state'],
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
+                                      // Dark overlay
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.transparent,
+                                              Colors.black.withOpacity(0.65),
+                                            ],
                                           ),
-                                          Text(
-                                            '${s['total']} homestays',
-                                            style: const TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 11,
+                                        ),
+                                      ),
+                                      // Text on top
+                                      Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              s['state'],
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              '${s['total']} homestays',
+                                              style: const TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 11,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
                             );
                           },
                           childCount: states.length,
